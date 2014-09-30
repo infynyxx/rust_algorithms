@@ -15,10 +15,6 @@ fn test_selection_sort() {
     test_sort(10);
     test_sort(101);
     test_sort(1002);
-
-    let vector3 = SelectionSort::new(100);
-    println!("{}", vector3.sort());
-    //assert_eq!(vector3.input_array, vector3.sort());
 }
 
 fn test_sort(size: int) {
