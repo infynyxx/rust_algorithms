@@ -1,29 +1,46 @@
-pub fn sort(numbers: Vec<int>) -> Vec<int> {
-    println!("Initial array: {}", numbers);
-    let mut i = 0;
-    let mut min = 0;
-    let mut tmp = 0;
+use sorting::Sorting;
+use utils::rand_array;
 
-    let mut arr: Vec<int> = numbers;
-    while i < arr.len() - 1 {
-        min = i;
-        let mut j = i + 1;
-        while j < arr.len() {
-            if arr[j] < arr[min] {
-                min = j;
+pub struct SelectionSort {
+    pub input_array: Vec<int>
+}
+
+impl SelectionSort {
+    pub fn new (size: int) -> SelectionSort {
+        SelectionSort {
+            input_array: rand_array(size)
+        }
+    }
+}
+
+impl Sorting for SelectionSort {
+    fn sort(&self) -> Vec<int> {
+        println!("Initial array: {}", self.input_array);
+        let mut i = 0;
+        let mut min = 0;
+        let mut tmp = 0;
+
+        let mut arr: Vec<int> = self.input_array.clone();
+        while i < arr.len() - 1 {
+            min = i;
+            let mut j = i + 1;
+            while j < arr.len() {
+                if arr[j] < arr[min] {
+                    min = j;
+                }
+
+                j = j + 1;
             }
 
-            j = j + 1;
-        }
+            if min != i {
+                tmp = arr[i];
+                *arr.get_mut(i) = *arr.get_mut(min);
+                *arr.get_mut(min) = tmp;
+            }
 
-        if min != i {
-            tmp = arr[i];
-            *arr.get_mut(i) = *arr.get_mut(min);
-            *arr.get_mut(min) = tmp;
+            i = i + 1;
         }
-
-        i = i + 1;
+        println!("Sorted array: {}", arr);
+        arr
     }
-    println!("Sorted array: {}", arr);
-    arr
 }
