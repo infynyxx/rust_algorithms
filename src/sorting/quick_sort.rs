@@ -13,22 +13,24 @@ impl QuickSort {
         }
     }
 
-    fn quick_sort(array: &Vec<int>, left: uint, right: uint) {
+    fn quick_sort(array: &mut Vec<int>, left: uint, right: uint) {
         let mut i = left;
         let mut j = right;
-        let index: uint = left + (left + right) / 2;
+        let index: uint = left + (right -  left) / 2;
         let pivot: int = *array.get_mut(index);
-        while (i <= j) {
-            while (array[i] < pivot) {
+        println!("Pivot: {}", pivot);
+        while (i < j) {
+            while (*array.get_mut(i) < pivot) {
                 i = i + 1;
             }
 
-            while (array[j] < pivot) {
+            while (*array.get_mut(j) < pivot) {
                 j = j - 1;
             }
 
             if (i <= j) {
-                let temp = array[i];
+                let temp = *array.get_mut(i);
+                println!("Temp: {}", temp);
                 *array.get_mut(i) = *array.get_mut(j);
                 *array.get_mut(j) = temp;
                 i = i + 1;
@@ -54,7 +56,7 @@ impl Sorting for QuickSort {
             self.input_array.clone();
         }
         let mut arr = self.input_array.clone();
-        QuickSort::quick_sort(&arr, 0, arr.len() - 1);
+        QuickSort::quick_sort(&mut arr, 0, self.input_array.len() - 1);
         println!("Sorted array: {}", arr);
         arr
     }
