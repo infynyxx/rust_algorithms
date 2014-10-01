@@ -6,44 +6,42 @@ pub struct QuickSort {
 }
 
 impl QuickSort {
-    pub fn new (size: int) -> QuickSort {
+    pub fn new(size: int) -> QuickSort {
         let mut rand_array: Vec<int> = rand_array(size);
         QuickSort {
             input_array: rand_array
         }
     }
 
-    fn quick_sort(array: &mut Vec<int>, left: uint, right: uint) {
+    fn partition(array: &mut Vec<int>, left: uint, right: uint) -> uint {
+        let pivot_index: uint = left + (right -  left) / 2;
+        let pivot_value: int = *array.get(pivot_index);
+        QuickSort::swap(array, pivot_index, right);
+        let mut store_index: uint = left;
         let mut i = left;
-        let mut j = right;
-        let index: uint = left + (right -  left) / 2;
-        let pivot: int = *array.get_mut(index);
-        println!("Pivot: {}", pivot);
-        while (i < j) {
-            while (*array.get_mut(i) < pivot) {
-                i = i + 1;
+        while i <= right - 1 {
+            if *array.get(i) < pivot_value {
+                QuickSort::swap(array, i, store_index);
+                store_index = store_index + 1;
             }
-
-            while (*array.get_mut(j) < pivot) {
-                j = j - 1;
-            }
-
-            if (i <= j) {
-                let temp = *array.get_mut(i);
-                println!("Temp: {}", temp);
-                *array.get_mut(i) = *array.get_mut(j);
-                *array.get_mut(j) = temp;
-                i = i + 1;
-                j = j - 1;
-            }
+            i = i + 1;
         }
+        QuickSort::swap(array, store_index, right);
+        store_index
+    }
 
-        if left < j {
-            QuickSort::quick_sort(array, left, j);
-        }
+    fn swap(array: &mut Vec<int>, pivot_index: uint, right: uint) {
+        let temp_pivot = *array.get(pivot_index);
+        let temp_right = *array.get(right);
+        *array.get_mut(pivot_index) = temp_right;
+        *array.get_mut(right) = temp_pivot;
+    }
 
-        if i < right {
-            QuickSort::quick_sort(array, i, right);
+    fn quick_sort(array: &mut Vec<int>, left: uint, right: uint) {
+        if left < right {
+            let partition = QuickSort::partition(array, left, right);
+            QuickSort::quick_sort(array, left, right -1);
+            QuickSort::quick_sort(array, partition + 1, right);
         }
     }
 }
