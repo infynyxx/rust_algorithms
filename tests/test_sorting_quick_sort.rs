@@ -14,7 +14,7 @@ fn test_quick_sort() {
 
     test_sort(10);
     test_sort(101);
-    //test_sort(500); // todo: optimize sorting
+    test_sort(150); // todo: optimize sorting
 }
 
 fn test_sort(size: int) {
