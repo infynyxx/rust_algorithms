@@ -2,5 +2,6 @@
 #![crate_type = "lib"]
 
 pub mod algorithms;
+pub mod concurrency;
 pub mod sorting;
 pub mod utils;
