@@ -3,4 +3,5 @@
 
 pub mod algorithms;
 pub mod sorting;
+pub mod binary_search;
 pub mod utils;
